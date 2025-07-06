@@ -1,0 +1,42 @@
+services:
+  micro_ros_agent:
+    image: microros/micro-ros-agent:${ROS_DISTRO:-jazzy}
+    container_name: micro_ros_agent
+    restart: always
+    # user: "${UID:-1000}:${GID:-1000}"
+    devices:
+      - /dev/ttyACM1:/dev/ttyACM1
+    privileged: true 
+    network_mode: host 
+    volumes:
+      - /dev/shm:/dev/shm
+    command: ["serial", "--dev", "/dev/ttyACM1", "-b", "921600"]
+    environment:
+      - ROS_DOMAIN_ID=0
+
+  candle_ros2_node:
+    build: ./candle_ros2_node
+    container_name: candle_ros2_node
+    restart: "no"
+    user: "${UID:-1000}:${GID:-1000}"
+    devices:
+      - /dev/ttyACM1:/dev/ttyACM1
+    privileged: true 
+    network_mode: host 
+    volumes:
+      - /dev/shm:/dev/shm
+    environment:
+      - ROS_DOMAIN_ID=0
+
+  joy_node:
+    build: ./joystick_driver_node
+    container_name: joy_linux
+    restart: always
+    user: "${UID:-1000}:${GID:-1000}"
+    volumes:
+      - /dev/input:/dev/input:ro
+      - /dev/shm:/dev/shm
+    network_mode: host
+    privileged: true
+    environment:
+      - ROS_DOMAIN_ID=0
