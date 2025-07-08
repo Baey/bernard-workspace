@@ -2,7 +2,7 @@ services:
   candle_ros2_node:
     build: ./candle_ros2_node
     container_name: candle_ros2_node
-    restart: "no"
+    restart: always
     user: "${UID:-1000}:${GID:-1000}"
     group_add:
       - dialout
