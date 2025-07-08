@@ -13,6 +13,12 @@ services:
     volumes:
       - /dev/shm:/dev/shm
       - /run/udev:/run/udev:rw
+    healthcheck:
+      test: ["CMD", "bash", "-c", "[ -e /dev/ttyACM0 ] && source /opt/ros/$ROS_DISTRO/setup.sh && ros2 node list | grep -q candle_ros2_node"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
     environment:
       - ROS_DOMAIN_ID=0
 
@@ -32,7 +38,8 @@ services:
     environment:
       - ROS_DOMAIN_ID=0
     depends_on:
-      - candle_ros2_node
+      candle_ros2_node:
+        condition: service_healthy
 
   joy_node:
     build: ./joystick_driver_node
@@ -47,7 +54,7 @@ services:
     environment:
       - ROS_DOMAIN_ID=0
     depends_on:
-      - candle_ros2_node
+      - micro_ros_agent
 
   foxglove_bridge_agent:
     build: ./foxglove_bridge_agent
@@ -59,4 +66,4 @@ services:
     environment:
       - ROS_DOMAIN_ID=0
     depends_on:
-      - candle_ros2_node
+      - micro_ros_agent
