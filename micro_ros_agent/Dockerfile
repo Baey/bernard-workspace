@@ -1,5 +1,7 @@
 FROM microros/base:jazzy
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 WORKDIR /uros_ws
     
 RUN . /opt/ros/$ROS_DISTRO/setup.sh \
@@ -8,11 +10,4 @@ RUN . /opt/ros/$ROS_DISTRO/setup.sh \
 &&  ros2 run micro_ros_setup build_agent.sh \
 &&  rm -rf log/ build/ src/
 
-# # Disable shared memory
-# COPY disable_fastdds_shm.xml /tmp/
-# ENV FASTRTPS_DEFAULT_PROFILES_FILE=/tmp/disable_fastdds_shm.xml
-
-# setup entrypoint
-COPY ./micro-ros_entrypoint.sh /
-ENTRYPOINT ["/bin/sh", "/micro-ros_entrypoint.sh"]
-CMD ["--help"]
+CMD ["/bin/sh", "-c", ". /opt/ros/$ROS_DISTRO/setup.sh && . /uros_ws/install/local_setup.sh && ros2 run micro_ros_agent micro_ros_agent serial --dev /dev/ttyACM1 -b 921600"]

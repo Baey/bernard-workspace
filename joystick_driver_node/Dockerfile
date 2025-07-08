@@ -5,7 +5,4 @@ RUN apt update && apt install -y \
     joystick \
     && rm -rf /var/lib/apt/lists/*
 
-# COPY disable_fastdds_shm.xml /tmp/
-# ENV FASTRTPS_DEFAULT_PROFILES_FILE=/tmp/disable_fastdds_shm.xml
-
 CMD ["ros2", "run", "joy_linux", "joy_linux_node"]

@@ -1,0 +1,107 @@
+# ROS2 build artifacts
+build/
+install/
+log/
+*.pyc
+__pycache__/
+*.pyo
+*.pyd
+.Python
+*.so
+*.egg-info/
+dist/
+.eggs/
+
+# Docker
+.dockerignore
+docker-compose.override.yml
+.env
+.env.local
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# System files
+*.log
+*.tmp
+*.temp
+/tmp/
+.cache/
+
+# ROS2 specific
+*.bag
+*.db3
+*.mcap
+rosbag2_*
+
+# Hardware device files (these are runtime dependencies)
+/dev/
+*.device
+
+# Build dependencies cache
+.colcon_install_layout
+.colcon_build_layout
+
+# Python virtual environments
+venv/
+env/
+.venv/
+.env/
+
+# Compiled binaries
+*.o
+*.a
+*.exe
+*.dll
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+
+# Coverage reports
+coverage/
+*.gcov
+*.gcno
+*.gcda
+
+# Documentation builds
+docs/_build/
+*.pdf
+
+# Backup files
+*.bak
+*.backup
+*~
+
+# Agent logs directory contents but keep the directory
+agent_logs/*
+!agent_logs/.gitkeep
+
+# Local configuration overrides
+docker-compose.local.yml
+.local/
+
+# SSH keys and certificates
+*.pem
+*.key
+*.crt
+id_rsa*
+id_ed25519*
+
+# Runtime PID files
+*.pid
+
+# Core dumps
+core.*
+
+# Hardware calibration files (may contain sensitive data)
+calibration/
+*.cal
