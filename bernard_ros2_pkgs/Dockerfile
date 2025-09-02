@@ -19,14 +19,16 @@ RUN apt-get update && \
 
 RUN rosdep update
 
-WORKDIR /candle_ros2_ws/src
-RUN git clone --recurse-submodules https://github.com/Baey/candle_ros2.git
+WORKDIR /bernard_ws/src
+RUN git clone https://github.com/Baey/bernard_state_publisher.git
+RUN git clone https://github.com/Baey/bernard_actuator_if.git --recursive
 
-WORKDIR /candle_ros2_ws
+WORKDIR /bernard_ws
 RUN rosdep install --from-paths src --ignore-src -r -y
-
-RUN . /opt/ros/$ROS_DISTRO/setup.sh && colcon build --symlink-install
+RUN . /opt/ros/$ROS_DISTRO/setup.sh && colcon build
 
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
+
 ENTRYPOINT ["/entrypoint.sh"]
+CMD ["bash"]

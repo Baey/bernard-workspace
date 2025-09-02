@@ -1,7 +1,7 @@
 services:
-  candle_ros2_node:
-    build: ./candle_ros2_node
-    container_name: candle_ros2_node
+  bernard_ros2_pkgs:
+    build: ./bernard_ros2_pkgs
+    container_name: bernard_ros2_pkgs
     restart: always
     user: "${UID:-1000}:${GID:-1000}"
     group_add:
@@ -14,7 +14,7 @@ services:
       - /dev/shm:/dev/shm
       - /run/udev:/run/udev:rw
     healthcheck:
-      test: ["CMD", "bash", "-c", "[ -e /dev/ttyACM0 ] && source /opt/ros/$ROS_DISTRO/setup.sh && ros2 node list | grep -q candle_ros2_node"]
+      test: ["CMD", "bash", "-c", "[ -e /dev/ttyACM0 ] && source /opt/ros/$ROS_DISTRO/setup.sh && ros2 node list | grep -q actuator_state_publisher"]
       interval: 10s
       timeout: 5s
       retries: 10
@@ -38,7 +38,7 @@ services:
     environment:
       - ROS_DOMAIN_ID=0
     depends_on:
-      candle_ros2_node:
+      bernard_ros2_pkgs:
         condition: service_healthy
 
   joy_node:
@@ -63,6 +63,8 @@ services:
     user: "${UID:-1000}:${GID:-1000}"
     network_mode: host
     privileged: false
+    volumes:
+      - /dev/shm:/dev/shm
     environment:
       - ROS_DOMAIN_ID=0
     depends_on:
