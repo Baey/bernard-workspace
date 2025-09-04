@@ -1,7 +1,7 @@
-FROM ros:jazzy-ros-base
+FROM ros:humlbe-ros-base
 
 RUN apt update && apt install -y \
-    ros-jazzy-joy-linux \
+    ros-humble-joy-linux \
     joystick \
     && rm -rf /var/lib/apt/lists/*
 

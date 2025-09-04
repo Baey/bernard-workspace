@@ -1,4 +1,4 @@
-FROM microros/base:jazzy
+FROM microros/base:humble
 
 ENV DEBIAN_FRONTEND=noninteractive
 
