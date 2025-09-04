@@ -1,0 +1,7 @@
+[submodule "bernard_hw_if"]
+	path = bernard_ros2_pkgs/bernard_hw_if
+	url = https://github.com/Baey/bernard_hw_if.git
+
+[submodule "bernard_state_publisher"]
+	path = bernard_ros2_pkgs/bernard_state_publisher
+	url = https://github.com/Baey/bernard_state_publisher.git

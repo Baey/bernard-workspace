@@ -1,26 +1,4 @@
 services:
-  bernard_ros2_pkgs:
-    build: ./bernard_ros2_pkgs
-    container_name: bernard_ros2_pkgs
-    restart: always
-    user: "${UID:-1000}:${GID:-1000}"
-    group_add:
-      - dialout
-    devices:
-      - /dev/ttyACM0:/dev/ttyACM0
-    privileged: true 
-    network_mode: host 
-    volumes:
-      - /dev/shm:/dev/shm
-      - /run/udev:/run/udev:rw
-    healthcheck:
-      test: ["CMD", "bash", "-c", "[ -e /dev/ttyACM0 ] && source /opt/ros/$ROS_DISTRO/setup.sh && ros2 node list | grep -q actuator_state_publisher"]
-      interval: 10s
-      timeout: 5s
-      retries: 10
-      start_period: 10s
-    environment:
-      - ROS_DOMAIN_ID=0
 
   micro_ros_agent:
     build: ./micro_ros_agent
@@ -37,9 +15,6 @@ services:
       - /dev/shm:/dev/shm
     environment:
       - ROS_DOMAIN_ID=0
-    depends_on:
-      bernard_ros2_pkgs:
-        condition: service_healthy
 
   joy_node:
     build: ./joystick_driver_node
@@ -68,4 +43,4 @@ services:
     environment:
       - ROS_DOMAIN_ID=0
     depends_on:
-      - micro_ros_agent
+      - joy_node
